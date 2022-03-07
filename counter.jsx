@@ -2,28 +2,18 @@
 import React, { Component } from "react";
 
 export default class Counter extends Component {
-  handleIncrement = () => {
-    this.setState({ value: this.state.value + 1 });
-  };
-
-  handleDecrement = () => {
-    if (this.state.value > 0) {
-      this.setState({ value: this.state.value - 1 });
-    }
-  };
-
   render() {
     return (
       <div>
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
         <button
-          onClick={() => this.handleIncrement()}
+          onClick={() => this.props.onIncrement(this.props.counter)}
           className="btn btn-success btn-sm"
         >
           Increment
         </button>
         <button
-          onClick={() => this.handleDecrement()}
+          onClick={() => this.props.onDecrement(this.props.counter)}
           className="btn btn-warning btn sm m-2"
         >
           Decrement
@@ -39,15 +29,15 @@ export default class Counter extends Component {
   }
 
   formatCount() {
-    //this.state --> const { count } = this.state;
-    const { value } = this.state;
+    //this.props.counter --> const { count } = this.props.counter;
+    const { value } = this.props.counter;
     const x = <span>Zero</span>;
     return value === 0 ? x : value;
   }
 
   getBadgeClasses() {
     let classes = "badge m-2 badge-";
-    classes += this.state.value === 0 ? "warning" : "primary";
+    classes += this.props.counter.value === 0 ? "warning" : "primary";
     return classes;
   }
 }
@@ -58,22 +48,22 @@ export default class Counter extends Component {
 
 getBadgeClasses() {
   let classes = "badge m-2 badge-";
-  classes += this.state.count === 0 ? "warning" : "primary";
+  classes += this.props.counter.count === 0 ? "warning" : "primary";
   return classes;
 }
 
 formatCount() {
-  //this.state --> const { count } = this.state;
-  const { count } = this.state;
+  //this.props.counter --> const { count } = this.props.counter;
+  const { count } = this.props.counter;
   const x = <span>Zero</span>;
   return count === 0 ? x : count;
 }
 
   renderTags() {
-    if (this.state.tags.length === 0) return <p>There are no tags!</p>;
+    if (this.props.counter.tags.length === 0) return <p>There are no tags!</p>;
     return (
       <ul>
-        {this.state.tags.map((tag) => (
+        {this.props.counter.tags.map((tag) => (
           <li key={tag}>{tag}</li>
         ))}
       </ul>
